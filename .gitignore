@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# PyCharm files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# macOS files
+.DS_Store
+.Trashes
+._*
+.Spotlight-V100
+.AppleDouble
