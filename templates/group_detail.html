@@ -1,0 +1,7 @@
+<h1>{{ group.name }}</h1>
+<p>{{ group.description }}</p>
+<ul>
+    {% for note in notes %}
+        <li>{{ note.title }}</li>
+    {% endfor %}
+</ul>

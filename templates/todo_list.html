@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .bg-primary {
+        background-color: lightblue;
+    }
+    .bg-light {
+        background-color: #f2f2f2;
+    }
+    </style>
+    <table>
+    <tr>
+        <th>List's Name</th>
+        <th>Task</th>
+        <th>Due date</th>
+    </tr>
+    {% for list in todo_list %}
+        <tr class="{% cycle 'bg-primary' 'bg-light' %}">
+        <td><a href="{% url 'todo_list_detail' list.pk %}">{{ list.name }}</a></td>
+        <td>{{ list.task }}</td>
+        <td>{{ list.due_date }}</td>
+
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+        <a href="{% url 'todo_create' %}">Create New Todo List</a>
+
+{% endblock %}

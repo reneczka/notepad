@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ todo_list.name }}</h1>
+    <p>Due Date: {{ todo_list.due_date }}</p>
+    <p>Description: {{ todo_list.description }}</p>
+    <h2>Tasks</h2>
+    <ul>
+        {% for task in todo_list.task_set.all %}
+            <li>{{ task.name }} - {{ task.completed }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'todo_update' todo_list.id %}">Edit Todo List</a>
+    <a href="{% url 'todo_delete' todo_list.id %}">Delete Todo List</a>
+    <a href="{% url 'todo_create' %}">Create New Todo List</a>
+{% endblock %}

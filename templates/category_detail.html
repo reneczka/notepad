@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ category.name }}</h1>
+<h4>{{ category.description }}</h4>
+    <br>
+    <h3>Notatki:</h3>
+    <ul>
+    {% for note in notes %}
+        <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
+    {% endfor %}
+</ul>
+    <br>
+    <a href="{% url 'category_update' category.pk %}">Edit</a>
+    <a href="{% url 'category_delete' category.pk %}">Delete</a>
+{% endblock %}
