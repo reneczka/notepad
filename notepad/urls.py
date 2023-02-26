@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from notepad_app import views
-from notepad_app.views import TodoListView, TodoListCreateView, TodoListUpdateView, TodoListDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,11 +32,4 @@ urlpatterns = [
     path('note/create/', views.note_create, name='note_create'),
     path('note/<int:pk>/update/', views.note_update, name='note_update'),
     path('note/<int:pk>/delete/', views.note_delete, name='note_delete'),
-    path('group/', views.groups, name='groups'),
-    path('group/<int:group_id>/', views.group_detail, name='group_detail'),
-    path('todo/', TodoListView.as_view(), name='todo_list'),
-    path('todo/<int:todolist_id>/', views.todo_list_detail, name='todo_list_detail'),
-    path('todo/create/', TodoListCreateView.as_view(), name='todo_create'),
-    path('todo/<int:pk>/update/', TodoListUpdateView.as_view(), name='todo_update'),
-    path('todo/<int:pk>/delete/', TodoListDeleteView.as_view(), name='todo_delete'),
 ]
