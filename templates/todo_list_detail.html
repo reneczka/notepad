@@ -1,16 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ todo_list.name }}</h1>
-    <p>Due Date: {{ todo_list.due_date }}</p>
-    <p>Description: {{ todo_list.description }}</p>
-    <h2>Tasks</h2>
+  <h2>{{ todo_list.title }}</h2>
+  <br>
+  <h3>Todo Items:</h3>
+  <br>
+  <form method="POST">
+    {% csrf_token %}
     <ul>
-        {% for task in todo_list.task_set.all %}
-            <li>{{ task.name }} - {{ task.completed }}</li>
-        {% endfor %}
+      {% for todo_item in todo_items %}
+        <li>
+          {{ todo_item.title }}
+          <label>
+            <input type="checkbox" name="todo_item_{{ todo_item.id }}" {% if todo_item.completed %}checked{% endif %}>
+          </label>
+          <a href="{% url 'update_todo_item' todo_item.id %}">Update</a>
+          <a href="{% url 'delete_todo_item' todo_item.id %}">Delete</a>
+        </li>
+      {% empty %}
+        <li>No todo items found.</li>
+      {% endfor %}
     </ul>
-    <a href="{% url 'todo_update' todo_list.id %}">Edit Todo List</a>
-    <a href="{% url 'todo_delete' todo_list.id %}">Delete Todo List</a>
-    <a href="{% url 'todo_create' %}">Create New Todo List</a>
+    <button type="submit">Save Changes</button>
+  </form>
+  <br>
+  <a href="{% url 'create_todo_item' todo_list.id %}">Create Todo Item</a>
+  <a href="{% url 'update_todo_list' todo_list.id %}">Update Todo List</a>
+  <a href="{% url 'delete_todo_list' todo_list.id %}">Delete Todo List</a>
 {% endblock %}

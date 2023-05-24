@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'notepad.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'notepad1',
+        'NAME': 'notepad3',
         'HOST': 'localhost',
         'USER': 'postgres',
         'PASSWORD': 'coderslab'
@@ -116,6 +116,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Login redirect
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

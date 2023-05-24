@@ -4,17 +4,17 @@
     <h2>{{ note.title }}</h2>
     <p>{{ note.content }}</p>
     <br>
-    <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.name }}</a></p>
+    <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.title }}</a></p>
 {#    <p>Group: <a href="{% url 'group_detail' note.group.pk %}">{{ note.group.name }}</a></p>#}
     <p>Created at: {{ note.created_at }}</p>
     <p>Updated at: {{ note.updated_at }}</p>
     <br>
-    <h3>Comments:</h3>
-    <ul>
-        {% for comment in comments %}
-            <li>{{ comment.author }}: {{ comment.body }}</li>
-        {% endfor %}
-    </ul>
+{#    <h3>Comments:</h3>#}
+{#    <ul>#}
+{#        {% for comment in comments %}#}
+{#            <li>{{ comment.author }}: {{ comment.body }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
     <br>
     <br>
     <a href="{% url 'note_update' note.pk %}">Edit</a>

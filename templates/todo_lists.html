@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Todo Lists</h2>
+  <ul>
+    {% for todo_list in todo_lists %}
+      <li><a href="{% url 'todo_list_detail' todo_list.id %}">{{ todo_list.title }}</a></li>
+    {% empty %}
+      <li>No todo lists found.</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'create_todo_list' %}">Create Todo List</a>
+{% endblock %}

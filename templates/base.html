@@ -24,15 +24,7 @@
         main {
             padding: 20px;
         }
-        {#/* Add styling for the h1 welcome */#}
-        {#h1 {#}
-        {#    height: 790px;#}
-        {#    text-align: center;#}
-        {#    font-size: 60px;#}
-        {#    color: white;#}
-        {#    background: url("https://cdn.thewirecutter.com/wp-content/media/2020/11/notebooks-2048px-1981-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=480&dpr=2") no-repeat center center;#}
-        {#    background-size: cover;#}
-        {#}#}
+
         /* Add styling for the footer */
         footer {
             background-color: #5BC0EB;
@@ -53,13 +45,16 @@
             <a href="{% url 'index' %}">Home</a>
             <a href="{% url 'note_list' %}">Notes</a>
             <a href="{% url 'categories' %}">Categories</a>
-
+            <a href="{% url 'todo_lists' %}">ToDoLists</a>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </nav>
     </header>
     <main>
 
         {% block content %}
-        <h1>Welcome!</h1>
+            <h1>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h1>
         {% endblock %}
 
 
