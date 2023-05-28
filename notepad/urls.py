@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from notepad_app import views
+from notepad_app.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,6 @@ urlpatterns = [
     path('todolist/', views.todo_lists, name='todo_lists'),
     path('todolist/<int:pk>/', views.todo_list_detail, name='todo_list_detail'),
     path('register/', views.register, name='register'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]

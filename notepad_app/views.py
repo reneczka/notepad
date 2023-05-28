@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views, authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Category, Note, TodoList, TodoItem
@@ -8,11 +8,30 @@ from .forms import NoteForm, CategoryForm, TodoListForm, TodoItemForm
 
 # Create your views here
 
+class LoginView(auth_views.LoginView):
+    template_name = 'login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class LogoutView(auth_views.LogoutView):
+    template_name = 'logout.html'
+
+
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
             return redirect('login')
     else:
         form = UserCreationForm()
