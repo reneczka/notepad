@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ team.name }}</h2>
+    <p>Owner: {{ team.owner }}</p>
+    <p>Members:</p>
+    <ul>
+        {% for member in team.members.all %}
+            <li>{{ member.username }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if user == team.owner %}
+        <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
+    {% endif %}
+
+    {% if user in team.members.all %}
+        <a href="{% url 'team_leave' team.pk %}">Leave Team</a>
+    {% endif %}
+{% endblock content %}

@@ -44,5 +44,19 @@ class TodoItem(models.Model):
         return self.title
 
 
+class Team(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_teams')
+    members = models.ManyToManyField(User, through='TeamMember')
+
+    def __str__(self):
+        return self.name
 
 
+class TeamMember(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.username} is a member of {self.team.name}'

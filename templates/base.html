@@ -49,10 +49,17 @@
             <a href="{% url 'note_list' %}">Notes</a>
             <a href="{% url 'categories' %}">Categories</a>
             <a href="{% url 'todo_lists' %}">ToDoLists</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'team_list' %}">Teams</a>
+                <a href="{% url 'team_create' %}">Create a Team</a>
+            {% endif %}
         </nav>
         <nav>
-            <a href="{% url 'login' %}">Log in</a>
-            <a href="{% url 'logout' %}">Log out</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Log out</a>
+            {% else %}
+                <a href="{% url 'login' %}">Log in</a>
+            {% endif %}
         </nav>
     </header>
     <main>

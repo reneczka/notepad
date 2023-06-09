@@ -1,7 +1,7 @@
 from django import forms
 # from django.forms import DateInput
-
-from .models import Note, Category, TodoList, TodoItem
+from django.contrib.auth.models import User
+from .models import Note, Category, TodoList, TodoItem, Team, TeamMember
 
 
 class NoteForm(forms.ModelForm):
@@ -32,3 +32,21 @@ class TodoItemForm(forms.ModelForm):
     class Meta:
         model = TodoItem
         fields = ['title', 'completed']
+
+
+class TeamForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ['name', 'description']
+
+
+class TeamMemberForm(forms.Form):
+    username = forms.CharField()
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not User.objects.filter(username=username).exists():
+            raise forms.ValidationError("This username does not exist")
+        return username
+
+

@@ -1,9 +1,12 @@
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Category, Note, TodoList, TodoItem
-from .forms import NoteForm, CategoryForm, TodoListForm, TodoItemForm
+from .models import Category, Note, TodoList, TodoItem, Team, TeamMember
+from .forms import NoteForm, CategoryForm, TodoListForm, TodoItemForm, TeamForm
+from guardian.shortcuts import assign_perm
 
 
 # Create your views here
@@ -238,5 +241,62 @@ def delete_todo_item(request, pk):
         todo_item.delete()
         return redirect('todo_list_detail', pk=todo_list.id)
     return render(request, 'delete_todo_item.html', {'todo_item': todo_item, 'todo_list': todo_list})
+
+
+def share_note_with_team(note, team):
+    assign_perm('view_note', team, note)
+
+
+def can_user_view_note(user, note):
+    return user.has_perm('view_note', note)
+
+
+@login_required
+def team_create(request):
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            team = form.save(commit=False)
+            team.owner = request.user
+            team.save()
+            return redirect('team_detail', pk=team.pk)
+    else:
+        form = TeamForm()
+    return render(request, 'team_create.html', {'form': form})
+
+
+@login_required
+def team_list(request):
+    all_teams = Team.objects.all()
+    your_teams = Team.objects.filter(owner=request.user)
+    return render(request, 'team_list.html', {'your_teams': your_teams, 'all_teams': all_teams})
+
+
+@login_required
+def team_detail(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    return render(request, 'team_detail.html', {'team': team})
+
+
+@login_required
+def team_join(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    TeamMember.objects.create(user=request.user, team=team)
+    return redirect('team_detail', pk=team.pk)
+
+
+@login_required
+def team_leave(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    TeamMember.objects.filter(user=request.user, team=team).delete()
+    return redirect('team_detail', pk=team.pk)
+
+
+@login_required
+def team_delete(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    if request.user == team.owner:
+        team.delete()
+    return redirect('team_list')
 
 

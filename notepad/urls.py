@@ -44,4 +44,10 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('team/create/', views.team_create, name='team_create'),
+    path('team/list/', views.team_list, name='team_list'),
+    path('team/<int:pk>/', views.team_detail, name='team_detail'),
+    path('team/<int:pk>/join/', views.team_join, name='team_join'),
+    path('team/<int:pk>/leave/', views.team_leave, name='team_leave'),
+    path('team/<int:pk>/delete/', views.team_delete, name='team_delete'),
 ]

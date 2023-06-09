@@ -1,0 +1,18 @@
+<h1>All teams:</h1>
+<ul>
+    {% for team in all_teams %}
+    <li>
+        <h2><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h2>
+        <p>{{ team.description }}</p>
+    </li>
+    {% endfor %}
+</ul>
+<h1>Your teams:</h1>
+<ul>
+    {% for team in your_teams %}
+    <li>
+        <h2><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h2>
+        <p>{{ team.description }}</p>
+    </li>
+    {% endfor %}
+</ul>
