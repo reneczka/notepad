@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h2>{{ team.name }}</h2>
-    <p>Owner: {{ team.owner }}</p>
-    <p>Members:</p>
-    <ul>
-        {% for member in team.members.all %}
-            <li>{{ member.username }}</li>
-        {% endfor %}
-    </ul>
 
+<body>
+    <h2>{{ team.name }}</h2>
+    {% if user not in team.members.all %}
+        <h4 class="fontlight">Click <a href="{% url 'team_join' team.pk %}">here</a> to join this team!</h4>
+    {% endif %}
+    <br>
+    <p>Owner: {{ team.owner }}</p><br>
+{% if team.members.exists %}
+        <p>Members:</p>
+        <ul>
+            {% for member in team.members.all %}
+                <li>{{ member.username }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+<br>
     {% if user == team.owner %}
         <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
     {% endif %}
@@ -17,4 +25,6 @@
     {% if user in team.members.all %}
         <a href="{% url 'team_leave' team.pk %}">Leave Team</a>
     {% endif %}
+    </body>
 {% endblock content %}
+
