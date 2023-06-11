@@ -269,7 +269,8 @@ def team_create(request):
 def team_list(request):
     all_teams = Team.objects.all()
     your_teams = Team.objects.filter(owner=request.user)
-    return render(request, 'team_list.html', {'your_teams': your_teams, 'all_teams': all_teams})
+    member_of_teams = Team.objects.filter(teammember__user=request.user)
+    return render(request, 'team_list.html', {'your_teams': your_teams, 'all_teams': all_teams, 'member_of_teams': member_of_teams})
 
 
 @login_required
@@ -282,7 +283,8 @@ def team_detail(request, pk):
 def team_join(request, pk):
     team = get_object_or_404(Team, pk=pk)
     TeamMember.objects.create(user=request.user, team=team)
-    return redirect('team_detail', pk=team.pk)
+    member_of_teams = Team.objects.filter(teammember__user=request.user)
+    return render(request, 'team_detail.html', {'team': team, 'member_of_teams': member_of_teams})
 
 
 @login_required

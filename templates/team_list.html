@@ -1,49 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-<body>
+    <h1>All teams:</h1>
     {% if all_teams %}
-        <h1>All teams:</h1>
         <ul>
             {% for team in all_teams %}
                 <li>
-                    <h3 class="fontlight"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
                     <p>{{ team.description }}</p>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <h1>There are no teams yet</h1>
+        <p>There are no teams yet.</p>
         <br>
-        <h3 class="fontlight">Click <a href="{% url 'team_create' %}">here</a> to create a new team!</h3>
-    {% endif %}
-    <br>
-    <br>
-    {% if your_teams %}
-        <h1>You're owner of:</h1>
-        <ul>
-            {% for team in your_teams %}
-                <li>
-                    <h3 class="fontlight"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
-                    <p>{{ team.description }}</p>
-                </li>
-            {% endfor %}
-        </ul>
+        <h3 class="font-light">Click <a href="{% url 'team_create' %}">here</a> to create a new team!</h3>
     {% endif %}
 
     <br>
     <br>
-    <h1>You're member of:</h1>
-        {% if member_of_teams %}
-            <ul>
-                {% for team in member_of_teams %}
-                    <li>
-                        <h3 class="foncia"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
-                        <p>{{ team.description }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>You are not a member of any teams.</p>
-        {% endif %}
-</body>
+    <h1>Your teams:</h1>
+    {% if your_teams %}
+        <ul>
+            {% for team in your_teams %}
+                <li>
+                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <p>{{ team.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not the owner of any teams yet.</p>
+    {% endif %}
+
+    <br>
+    <br>
+    <h1>Your memberships:</h1>
+    {% if member_of_teams %}
+        <ul>
+            {% for team in member_of_teams %}
+                <li>
+                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <p>{{ team.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not a member of any teams yet.</p>
+    {% endif %}
 {% endblock %}
