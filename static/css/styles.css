@@ -1,40 +1,110 @@
-/* Add some reset styling */
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/* Add styling for the header */
-header {
-    background-color: #5BC0EB;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between; /* Align items horizontally */
-    align-items: center; /* Align items vertically */
-}
-/* Add styling for the navigation links */
-header nav a {
-    color: white;
-    text-decoration: none;
-    margin-right: 20px;
-}
-/* Add styling for the main content */
-main {
-    padding: 20px;
+
+body, html {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
 }
 
-/* Add styling for the footer */
-footer {
-    background-color: #5BC0EB;
-    color: white;
-    padding: 20px 10px 10px 10px;
-    text-align: center;
-    position: fixed;
+/* Header */
+.custom-nav {
+    background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-nav .navbar-brand,
+.custom-nav .nav-link {
+    color: #fff;
+}
+
+.custom-nav .nav-link:hover {
+    color: #ddd;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
-    height: 58px;
+    background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+    color: #fff;
 }
 
-.font-light {
-font-weight: lighter;
+/* Content */
+.container {
+    min-height: calc(100% - 56px - 20px - 60px);  /* for sticky footer, subtract navbar and footer heights and margins */
+}
+
+/* Hamburger icon color */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Form styles */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3f5efb;
+    box-shadow: 0 0 5px rgba(63, 94, 251, 0.3);
+}
+
+.form-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background: #3f5efb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background: #3250d9;
+}
+
+.textarea {
+    width: 100%;
+}
+
+.input {
+    width: 100%;
 }

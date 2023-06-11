@@ -5,7 +5,7 @@
         <ul>
             {% for team in all_teams %}
                 <li>
-                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <h3 ><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
                     <p>{{ team.description }}</p>
                 </li>
             {% endfor %}
@@ -13,7 +13,7 @@
     {% else %}
         <p>There are no teams yet.</p>
         <br>
-        <h3 class="font-light">Click <a href="{% url 'team_create' %}">here</a> to create a new team!</h3>
+        <h3 >Click <a href="{% url 'team_create' %}">here</a> to create a new team!</h3>
     {% endif %}
 
     <br>
@@ -23,7 +23,7 @@
         <ul>
             {% for team in your_teams %}
                 <li>
-                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <h3 ><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
                     <p>{{ team.description }}</p>
                 </li>
             {% endfor %}
@@ -39,7 +39,7 @@
         <ul>
             {% for team in member_of_teams %}
                 <li>
-                    <h3 class="font-light"><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
+                    <h3 ><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h3>
                     <p>{{ team.description }}</p>
                 </li>
             {% endfor %}

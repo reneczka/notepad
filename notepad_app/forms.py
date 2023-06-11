@@ -35,6 +35,9 @@ class TodoItemForm(forms.ModelForm):
 
 
 class TeamForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
+
     class Meta:
         model = Team
         fields = ['name', 'description']
