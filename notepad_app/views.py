@@ -68,7 +68,7 @@ def note_create(request):
             return redirect('note_list')
     else:
         form = NoteForm()
-    return render(request, 'note_form.html', {'form': form})
+    return render(request, 'note_create.html', {'form': form})
 
 
 @login_required()
@@ -81,7 +81,7 @@ def note_update(request, pk):
             return redirect('note_detail', pk=note.pk)
     else:
         form = NoteForm(instance=note)
-    return render(request, 'note_form.html', {'form': form})
+    return render(request, 'note_create.html', {'form': form})
 
 
 @login_required

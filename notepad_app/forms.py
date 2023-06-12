@@ -5,11 +5,15 @@ from .models import Note, Category, TodoList, TodoItem, Team, TeamMember
 
 
 class NoteForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all())
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
+                                      widget=forms.Select(attrs={'class': 'my-custom-select'}))
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
 
     class Meta:
         model = Note
         fields = ['title', 'content', 'category']
+
 
 
 class CategoryForm(forms.ModelForm):
