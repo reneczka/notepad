@@ -53,8 +53,10 @@ def index(request):
 
 @login_required
 def note_list(request):
-    notes = Note.objects.filter(user=request.user)  # only notes for the logged-in user
-    return render(request, 'note_list.html', {'notes': notes})
+    notes = Note.objects.filter(user=request.user)
+    user_teams = Team.objects.filter(teammember__user=request.user)
+    team_notes = Note.objects.filter(team__in=user_teams)
+    return render(request, 'note_list.html', {'notes': notes, 'team_notes': team_notes, 'user_teams': user_teams})
 
 
 @login_required

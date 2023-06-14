@@ -9,11 +9,12 @@ class NoteForm(forms.ModelForm):
                                       widget=forms.Select(attrs={'class': 'my-custom-select'}))
     title = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
+    team = forms.ModelChoiceField(queryset=Team.objects.all(), widget=forms.Select(attrs={'class': 'my-custom-select'}),
+                                  required=False)
 
     class Meta:
         model = Note
-        fields = ['title', 'content', 'category']
-
+        fields = ['title', 'content', 'category', 'team']
 
 
 class CategoryForm(forms.ModelForm):
@@ -27,9 +28,13 @@ class DateInput(forms.DateInput):
 
 
 class TodoListForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    team = forms.ModelChoiceField(queryset=Team.objects.all(), widget=forms.Select(attrs={'class': 'my-custom-select'}),
+                                  required=False)
+
     class Meta:
         model = TodoList
-        fields = ['title']
+        fields = ['title', 'team']
 
 
 class TodoItemForm(forms.ModelForm):

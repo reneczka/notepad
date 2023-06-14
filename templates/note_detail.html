@@ -5,7 +5,7 @@
     <p>{{ note.content }}</p>
     <br>
     <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.title }}</a></p>
-{#    <p>Group: <a href="{% url 'group_detail' note.group.pk %}">{{ note.group.name }}</a></p>#}
+    <p>Team: <a href="{% url 'team_detail' note.team.pk %}">{{ note.team.name }}</a></p>
     <p>Created at: {{ note.created_at }}</p>
     <p>Updated at: {{ note.updated_at }}</p>
     <br>
