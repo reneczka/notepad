@@ -53,10 +53,20 @@ def index(request):
 
 @login_required
 def note_list(request):
-    notes = Note.objects.filter(user=request.user)
-    user_teams = Team.objects.filter(teammember__user=request.user)
-    team_notes = Note.objects.filter(team__in=user_teams)
-    return render(request, 'note_list.html', {'notes': notes, 'team_notes': team_notes, 'user_teams': user_teams})
+    user = request.user
+    notes = Note.objects.filter(user=user, team__isnull=True)
+    user_teams = Team.objects.filter(teammember__user=user)
+
+    # Build dictionary of teams and their notes
+    teams_and_notes = {}
+    for team in user_teams:
+        teams_and_notes[team] = Note.objects.filter(team=team)
+
+    context = {
+        'notes': notes,
+        'teams_and_notes': teams_and_notes,
+    }
+    return render(request, 'note_list.html', context)
 
 
 @login_required
@@ -100,10 +110,22 @@ def notes_by_category(request, category_id):
     return render(request, 'notes_by_category.html', {'category': category, 'notes': notes})
 
 
+# @login_required
+# def note_detail(request, pk):
+#     note = get_object_or_404(Note, pk=pk)
+#     return render(request, 'note_detail.html', {'note': note})
+#
+
 @login_required
 def note_detail(request, pk):
     note = get_object_or_404(Note, pk=pk)
-    return render(request, 'note_detail.html', {'note': note})
+
+    if note.team:
+        team = note.team
+    else:
+        team = None
+
+    return render(request, 'note_detail.html', {'note': note, 'team': team})
 
 
 def category_list(request):
@@ -278,7 +300,8 @@ def team_list(request):
 @login_required
 def team_detail(request, pk):
     team = get_object_or_404(Team, pk=pk)
-    return render(request, 'team_detail.html', {'team': team})
+    team_notes = Note.objects.filter(team=team)
+    return render(request, 'team_detail.html', {'team': team, 'team_notes': team_notes})
 
 
 @login_required

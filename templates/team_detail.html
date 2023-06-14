@@ -6,18 +6,22 @@
     {% if user not in team.members.all %}
         <h4>Click <a href="{% url 'team_join' team.pk %}">here</a> to join this team!</h4>
     {% endif %}
+    <p>Owner: {{ team.owner }}</p>
     <br>
-    <p>Owner: {{ team.owner }}</p><br>
-{% if team.members.exists %}
-        <p>Members:</p>
+    {% if team.members.exists %}
+        <p><strong>Members:</strong></p>
         <ul>
             {% for member in team.members.all %}
                 <li>{{ member.username }}</li>
             {% endfor %}
         </ul>
     {% endif %}
-
-<br>
+    <br>
+    <p><strong>Notes:</strong></p>
+    {% for note in team_notes %}
+        <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
+    {% endfor %}
+    <br>
     {% if user == team.owner %}
         <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
     {% endif %}

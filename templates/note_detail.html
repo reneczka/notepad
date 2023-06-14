@@ -1,20 +1,40 @@
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#    <h2>{{ note.title }}</h2>#}
+{#    <p>{{ note.content }}</p>#}
+{#    <br>#}
+{#    <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.title }}</a></p>#}
+{#    <p>Team: <a href="{% url 'team_detail' note.team.pk %}">{{ note.team.name }}</a></p>#}
+{#    <p>Created at: {{ note.created_at }}</p>#}
+{#    <p>Updated at: {{ note.updated_at }}</p>#}
+{#    <br>#}
+{#    <br>#}
+{#    <a href="{% url 'note_update' note.pk %}">Edit</a>#}
+{#    <a href="{% url 'note_delete' note.pk %}">Delete</a>#}
+{#{% endblock %}#}
+
 {% extends "base.html" %}
 
 {% block content %}
     <h2>{{ note.title }}</h2>
     <p>{{ note.content }}</p>
     <br>
-    <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.title }}</a></p>
-    <p>Team: <a href="{% url 'team_detail' note.team.pk %}">{{ note.team.name }}</a></p>
-    <p>Created at: {{ note.created_at }}</p>
-    <p>Updated at: {{ note.updated_at }}</p>
-    <br>
-{#    <h3>Comments:</h3>#}
-{#    <ul>#}
-{#        {% for comment in comments %}#}
-{#            <li>{{ comment.author }}: {{ comment.body }}</li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
+    {% if note.category %}
+        <p>Category: <a href="{% url 'category_detail' note.category.pk %}">{{ note.category.title }}</a></p>
+    {% else %}
+        <p>Category: Not assigned</p>
+    {% endif %}
+
+    {% if note.team %}
+        <p>Team: <a href="{% url 'team_detail' note.team.pk %}">{{ note.team.name }}</a></p>
+    {% else %}
+        <p class="text-bold">This is a personal note.</p>
+    {% endif %}
+
+    <p class="text-small">Created at: {{ note.created_at }}</p>
+    <p class="text-small">Updated at: {{ note.updated_at }}</p>
+    <p class="text-small">Created by: {{ note.user }}</p>
     <br>
     <br>
     <a href="{% url 'note_update' note.pk %}">Edit</a>

@@ -6,7 +6,7 @@ from .models import Note, Category, TodoList, TodoItem, Team, TeamMember
 
 class NoteForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(),
-                                      widget=forms.Select(attrs={'class': 'my-custom-select'}))
+                                      widget=forms.Select(attrs={'class': 'my-custom-select'}), required=False)
     title = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
     team = forms.ModelChoiceField(queryset=Team.objects.all(), widget=forms.Select(attrs={'class': 'my-custom-select'}),

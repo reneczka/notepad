@@ -121,3 +121,19 @@ body, html {
     border: 1px solid #ccc;
     padding: 5px 10px;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-small {
+    font-size: 75%
+}
+
+a {
+    color: black;
+}
+
+h1, h2 {
+    color: #2364a4;
+}
