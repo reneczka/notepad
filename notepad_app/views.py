@@ -145,7 +145,7 @@ def category_create(request):
             return redirect('categories')
     else:
         form = CategoryForm()
-    return render(request, 'category_form.html', {'form': form})
+    return render(request, 'category_create.html', {'form': form})
 
 
 def category_update(request, pk):
@@ -157,7 +157,7 @@ def category_update(request, pk):
             return redirect('categories')
     else:
         form = CategoryForm(instance=category)
-    return render(request, 'category_form.html', {'form': form})
+    return render(request, 'category_create.html', {'form': form})
 
 
 def category_delete(request, pk):
