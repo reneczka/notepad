@@ -1,30 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>{{ todo_list.title }}</h2>
-  <br>
-  <h3>Todo Items:</h3>
-  <br>
-  <form method="POST">
-    {% csrf_token %}
-    <ul>
-      {% for todo_item in todo_items %}
-        <li>
-          {{ todo_item.title }}
-          <label>
-            <input type="checkbox" name="todo_item_{{ todo_item.id }}" {% if todo_item.completed %}checked{% endif %}>
-          </label>
-          <a href="{% url 'update_todo_item' todo_item.id %}">Update</a>
-          <a href="{% url 'delete_todo_item' todo_item.id %}">Delete</a>
-        </li>
-      {% empty %}
-        <li>No todo items found.</li>
-      {% endfor %}
-    </ul>
-    <button type="submit">Save Changes</button>
-  </form>
-  <br>
-  <a href="{% url 'create_todo_item' todo_list.id %}">Create Todo Item</a>
-  <a href="{% url 'update_todo_list' todo_list.id %}">Update Todo List</a>
-  <a href="{% url 'delete_todo_list' todo_list.id %}">Delete Todo List</a>
+    <h2>{{ todo_list.title }}</h2>
+    <br>
+    <h5>Todo Items:</h5>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <ul>
+            {% for todo_item in todo_items %}
+                <li>
+                    {{ todo_item.title }}
+                    <label>
+                        <input type="checkbox" name="todo_item_{{ todo_item.id }}"
+                               {% if todo_item.completed %}checked{% endif %}>
+                    </label>
+
+                    <a href="{% url 'update_todo_item' todo_item.id %}">Update</a>
+                    <a href="{% url 'delete_todo_item' todo_item.id %}">Delete</a>
+                </li>
+            {% empty %}
+                <li>No todo items found.</li>
+            {% endfor %}
+        </ul>
+
+        <button type="submit" class="save-button">Save Changes</button>
+    </form>
+    <br>
+    {% if todo_list.team %}
+        <p>Team: <a href="{% url 'team_detail' todo_list.team.pk %}">{{ todo_list.team.name }}</a></p>
+    {% else %}
+        <p class="text-bold">This is a personal note.</p>
+    {% endif %}
+    <p class="text-small">Created by: {{ todo_list.user }}</p>
+    <br>
+    <a href="{% url 'create_todo_item' todo_list.id %}">Create Todo Item</a>
+    <a href="{% url 'update_todo_list' todo_list.id %}">Update Todo List</a>
+    <a href="{% url 'delete_todo_list' todo_list.id %}">Delete Todo List</a>
 {% endblock %}

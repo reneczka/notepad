@@ -1,34 +1,84 @@
+{#{% extends 'base.html' %}#}
+{#{% block content %}#}
+{##}
+{#<body>#}
+{#    <h2>{{ team.name }}</h2>#}
+{#    {% if user not in team.members.all %}#}
+{#        <p>Click <a href="{% url 'team_join' team.pk %}">HERE</a> to join this team!</p>#}
+{#    {% endif %}#}
+{#    <p>Owner: {{ team.owner }}</p>#}
+{#    <br>#}
+{#    {% if team.members.exists %}#}
+{#        <p class="text-bold">Members:</p>#}
+{#        <ul>#}
+{#            {% for member in team.members.all %}#}
+{#                <li>{{ member.username }}</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% endif %}#}
+{#    <br>#}
+{#    <p class="text-bold">Notes:</p>#}
+{#    {% for note in team_notes %}#}
+{#        <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>#}
+{#    {% endfor %}#}
+{#    <br>#}
+{#    <p class="text-bold">ToDo lists:</p>#}
+{#        {% for todo_list in team_todo_lists %}#}
+{#            <li><a href="{% url 'todo_list_detail' todo_list.pk %}">{{ todo_list.title }}</a></li>#}
+{#        {% empty %}#}
+{#            <p>No todo lists found.</p>#}
+{#        {% endfor %}#}
+{##}
+{#    <br>#}
+{#    {% if user == team.owner %}#}
+{#        <a href="{% url 'team_delete' team.pk %}">Delete Team</a>#}
+{#    {% endif %}#}
+{##}
+{#    {% if user in team.members.all %}#}
+{#        <a href="{% url 'team_leave' team.pk %}">Leave Team</a>#}
+{#    {% endif %}#}
+{#    </body>#}
+{#{% endblock %}#}
+{##}
 {% extends 'base.html' %}
 {% block content %}
 
 <body>
     <h2>{{ team.name }}</h2>
     {% if user not in team.members.all %}
-        <h4>Click <a href="{% url 'team_join' team.pk %}">here</a> to join this team!</h4>
-    {% endif %}
-    <p>Owner: {{ team.owner }}</p>
-    <br>
-    {% if team.members.exists %}
-        <p><strong>Members:</strong></p>
-        <ul>
-            {% for member in team.members.all %}
-                <li>{{ member.username }}</li>
+        <p>Click <a href="{% url 'team_join' team.pk %}">HERE</a> to join this team!</p>
+    {% else %}
+        <p>Owner: {{ team.owner }}</p>
+        <br>
+        {% if team.members.exists %}
+            <p class="text-bold">Members:</p>
+            <ul>
+                {% for member in team.members.all %}
+                    <li>{{ member.username }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br>
+        <p class="text-bold">Notes:</p>
+        {% for note in team_notes %}
+            <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
+        {% endfor %}
+        <br>
+        <p class="text-bold">ToDo lists:</p>
+            {% for todo_list in team_todo_lists %}
+                <li><a href="{% url 'todo_list_detail' todo_list.pk %}">{{ todo_list.title }}</a></li>
+            {% empty %}
+                <p>No todo lists found.</p>
             {% endfor %}
-        </ul>
-    {% endif %}
-    <br>
-    <p><strong>Notes:</strong></p>
-    {% for note in team_notes %}
-        <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
-    {% endfor %}
-    <br>
-    {% if user == team.owner %}
-        <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
-    {% endif %}
 
-    {% if user in team.members.all %}
-        <a href="{% url 'team_leave' team.pk %}">Leave Team</a>
+        <br>
+        {% if user == team.owner %}
+            <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
+        {% endif %}
+
+        {% if user in team.members.all %}
+            <a href="{% url 'team_leave' team.pk %}">Leave Team</a>
+        {% endif %}
     {% endif %}
     </body>
-{% endblock content %}
-
+{% endblock %}

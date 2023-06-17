@@ -74,12 +74,17 @@ def note_create(request):
     if request.method == 'POST':
         form = NoteForm(request.POST)
         if form.is_valid():
+            team = form.cleaned_data.get('team')
+            if request.user not in team.members.all():
+                form.add_error('team', 'You are not a member of this team.')
+                return render(request, 'note_create.html', {'form': form})
             note = form.save(commit=False)
             note.user = request.user
             note.save()
             return redirect('note_list')
     else:
         form = NoteForm()
+        form.fields['team'].queryset = Team.objects.filter(members=request.user)
     return render(request, 'note_create.html', {'form': form})
 
 
@@ -109,12 +114,6 @@ def notes_by_category(request, category_id):
     notes = Note.objects.filter(category=category)
     return render(request, 'notes_by_category.html', {'category': category, 'notes': notes})
 
-
-# @login_required
-# def note_detail(request, pk):
-#     note = get_object_or_404(Note, pk=pk)
-#     return render(request, 'note_detail.html', {'note': note})
-#
 
 @login_required
 def note_detail(request, pk):
@@ -167,23 +166,39 @@ def category_delete(request, pk):
     return redirect('categories')
 
 
-@login_required()
 def todo_lists(request):
-    todo_lists = TodoList.objects.filter(user=request.user)
-    return render(request, 'todo_lists.html', {'todo_lists': todo_lists})
+    user = request.user
+    todo_lists = TodoList.objects.filter(user=user, team__isnull=True)
+    user_teams = Team.objects.filter(teammember__user=user)
+
+    # Build dictionary of teams and their notes
+    teams_and_lists = {}
+    for team in user_teams:
+        teams_and_lists[team] = TodoList.objects.filter(team=team)
+
+    context = {
+        'todo_lists': todo_lists,
+        'teams_and_lists': teams_and_lists,
+    }
+    return render(request, 'todo_lists.html', context)
 
 
 @login_required
 def create_todo_list(request):
-    if request.method == 'POST':
+    if request.method =='POST':
         form = TodoListForm(request.POST)
         if form.is_valid():
-            todo_list = form.save(commit=False)
-            todo_list.user = request.user
-            todo_list.save()
+            team = form.cleaned_data.get('team')
+            if request.user not in team.members.all():
+                form.add_error('team', 'You are not a member of this team.')
+                return render(request, 'create_todo_list.html', {'form': form})
+            todolist = form.save(commit=False)
+            todolist.user = request.user
+            todolist.save()
             return redirect('todo_lists')
     else:
         form = TodoListForm()
+        form.fields['team'].queryset = Team.objects.filter(members=request.user)
     return render(request, 'create_todo_list.html', {'form': form})
 
 
@@ -294,14 +309,17 @@ def team_list(request):
     all_teams = Team.objects.all()
     your_teams = Team.objects.filter(owner=request.user)
     member_of_teams = Team.objects.filter(teammember__user=request.user)
-    return render(request, 'team_list.html', {'your_teams': your_teams, 'all_teams': all_teams, 'member_of_teams': member_of_teams})
+    return render(request, 'team_list.html', {'your_teams': your_teams, 'all_teams': all_teams,
+                                              'member_of_teams': member_of_teams})
 
 
 @login_required
 def team_detail(request, pk):
     team = get_object_or_404(Team, pk=pk)
     team_notes = Note.objects.filter(team=team)
-    return render(request, 'team_detail.html', {'team': team, 'team_notes': team_notes})
+    team_todo_lists = TodoList.objects.filter(team=team)
+    return render(request, 'team_detail.html', {'team': team, 'team_notes': team_notes,
+                                                'team_todo_lists': team_todo_lists})
 
 
 @login_required

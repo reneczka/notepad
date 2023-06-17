@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Todo Lists</h2>
-  <ul>
-    {% for todo_list in todo_lists %}
-      <li><a href="{% url 'todo_list_detail' todo_list.id %}">{{ todo_list.title }}</a></li>
+    <h2>Your private todo lists:</h2>
+    <ul>
+        {% for todo_list in todo_lists %}
+            <li><a href="{% url 'todo_list_detail' todo_list.pk %}">{{ todo_list.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_todo_list' %}" class="text-bold">Create Todo List</a>
+    <br>
+    <br>
+    <h2>ToDo lists within your teams:</h2>
+
+    {% for team, team_lists in teams_and_lists.items %}
+        <h4><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h4>
+        <ul>
+            {% for todolist in team_lists %}
+                <li><a href="{% url 'todo_list_detail' todolist.pk %}">{{ todolist.title }}</a></li>
+            {% endfor %}
+        </ul>
     {% empty %}
-      <li>No todo lists found.</li>
+        <p>You are not a member of any teams yet.</p>
     {% endfor %}
-  </ul>
-  <a href="{% url 'create_todo_list' %}" class="text-bold">Create Todo List</a>
+
 {% endblock %}
