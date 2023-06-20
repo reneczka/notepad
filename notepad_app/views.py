@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.contrib.auth.forms import UserCreationForm
