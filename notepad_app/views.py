@@ -187,10 +187,7 @@ def create_todo_list(request):
         form = TodoListForm(request.POST)
         if form.is_valid():
             team = form.cleaned_data.get('team')
-            if team is None:
-                form.add_error('team', 'Team is required.')
-                return render(request, 'create_todo_list.html', {'form': form})
-            if request.user not in team.members.all():
+            if team and request.user not in team.members.all():
                 form.add_error('team', 'You are not a member of this team.')
                 return render(request, 'create_todo_list.html', {'form': form})
             todolist = form.save(commit=False)
