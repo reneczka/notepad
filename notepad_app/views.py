@@ -73,7 +73,7 @@ def note_create(request):
         form = NoteForm(request.POST)
         if form.is_valid():
             team = form.cleaned_data.get('team')
-            if request.user not in team.members.all():
+            if team and request.user not in team.members.all():
                 form.add_error('team', 'You are not a member of this team.')
                 return render(request, 'note_create.html', {'form': form})
             note = form.save(commit=False)
