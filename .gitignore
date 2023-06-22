@@ -140,3 +140,6 @@ dmypy.json
 ._*
 .Spotlight-V100
 .AppleDouble
+
+
+poetry.lock
