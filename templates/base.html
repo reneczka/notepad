@@ -10,56 +10,53 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg custom-nav">
-            <a class="navbar-brand" href="{% url 'index' %}">NotePad</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item {% if request.resolver_match.url_name == 'note_list' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'note_list' %}">Notes</a>
-                    </li>
-                    <li class="nav-item {% if request.resolver_match.url_name == 'note_create' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'note_create' %}">Create a Note</a>
-                    </li>
-                    <li class="nav-item {% if request.resolver_match.url_name == 'categories' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'categories' %}">Categories</a>
-                    </li>
-                    <li class="nav-item {% if request.resolver_match.url_name == 'todo_lists' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'todo_lists' %}">ToDoLists</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item {% if request.resolver_match.url_name == 'team_list' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'team_list' %}">Teams</a>
-                    </li>
-                    <li class="nav-item {% if request.resolver_match.url_name == 'team_create' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'team_create' %}">Create a Team</a>
-                    </li>
+<header>
+    <nav class="navbar navbar-expand-lg custom-nav">
+        <a class="navbar-brand" href="{% url 'index' %}">NotePad</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if request.resolver_match.url_name == 'note_list' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'note_list' %}">Notes</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'categories' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'todo_lists' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'todo_lists' %}">ToDoLists</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'team_list' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'team_list' %}">Teams</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
                     <li class="nav-item {% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
                         <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                     </li>
-                    {% else %}
+                {% else %}
                     <li class="nav-item {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
                         <a class="nav-link" href="{% url 'login' %}">Log in</a>
                     </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <div class="container py-4">
-            {% block content %}
-                <h2>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h2>
-            {% endblock %}
+                {% endif %}
+            </ul>
         </div>
-    </main>
-    <footer class="footer text-center py-3">
-        reneczka
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </nav>
+</header>
+<main>
+    <div class="container py-4">
+        {% block content %}
+            <h2>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h2>
+        {% endblock %}
+    </div>
+</main>
+<footer class="footer text-center py-3">
+    reneczka
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

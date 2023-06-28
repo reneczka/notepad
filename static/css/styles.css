@@ -6,9 +6,17 @@
 }
 
 body, html {
-    height: 100%;
+    min-height: 100%;
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+}
+
+body {
+    padding-bottom: 56px;
+}
+
+ul {
+    padding-left: 20px;
 }
 
 /* Header */
@@ -32,7 +40,7 @@ body, html {
 
 /* Footer */
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
@@ -89,19 +97,8 @@ body, html {
     box-shadow: 0 0 5px rgba(63, 94, 251, 0.3);
 }
 
-.form-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    background: #923FADFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
-.form-button:hover {
+.btn:hover {
     background: #3250d9;
 }
 
@@ -138,3 +135,47 @@ h1, h2 {
     color: #2364a4;
 }
 
+.btn {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    background: #923FADFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: white;
+}
+
+.form-container .btn {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Reset and default styles:
+
+Styles that reset or normalize default browser styles should come first, such as body, h1, p, etc.
+Layout and structure:
+
+Selectors that define the overall layout and structure of the page, such as containers, grids, and major sections.
+Typography:
+
+Selectors related to typography, including headings (h1 to h6), paragraphs, links, and other text elements.
+Elements and components:
+
+Selectors for individual elements and reusable components, such as buttons, forms, lists, cards, etc. Group similar elements together.
+Specific page styles:
+
+Selectors that apply to specific pages or sections of your website. It's a good idea to organize these in a logical order based on the page structure.
+Responsive styles:
+
+Media queries and selectors that handle responsive design should be placed after the base styles. You can organize them based on screen sizes or breakpoints.
+Pseudo-classes and pseudo-elements:
+
+Selectors with pseudo-classes (:hover, :active, :focus, etc.) and pseudo-elements (::before, ::after, etc.) can be placed after the main selectors.
+Utility classes and modifiers:
+
+If you're using a CSS framework or have utility classes or modifiers, include them last. These classes usually have specific naming conventions and can override previous styles.*/

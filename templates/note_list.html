@@ -7,13 +7,13 @@
             <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{% url 'note_create' %}" class="text-bold">Create a note</a>
+    <a href="{% url 'note_create' %}"><button class="btn">create a note</button></a>
     <br>
     <br>
     <h2>Notes within your teams:</h2>
 
     {% for team, team_notes in teams_and_notes.items %}
-        <h4><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h4>
+        <h5><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h5>
         <ul>
             {% for note in team_notes %}
                 <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>

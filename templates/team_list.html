@@ -5,15 +5,13 @@
         <ul>
             {% for team in all_teams %}
                 <li>
-                    <h5><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h5>
-{#                    <p>{{ team.description }}</p>#}
+                    <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>There are no teams yet.</p>
         <br>
-        <h5>Click <a href="{% url 'team_create' %}">here</a> to create a new team!</h5>
     {% endif %}
 
     <br>
@@ -23,10 +21,10 @@
         <ul>
             {% for team in your_teams %}
                 <li>
-                    <h5><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h5>
-{#                    <p>{{ team.description }}</p>#}
+                    <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
                 </li>
             {% endfor %}
+            <a href="{% url 'team_create' %}"><button class="btn">create a team</button></a>
         </ul>
     {% else %}
         <p>You are not the owner of any teams yet.</p>
@@ -39,7 +37,7 @@
         <ul>
             {% for team in member_of_teams %}
                 <li>
-                    <h5><a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a></h5>
+                    <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
                 </li>
             {% endfor %}
         </ul>

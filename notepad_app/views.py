@@ -125,6 +125,7 @@ def note_detail(request, pk):
     return render(request, 'note_detail.html', {'note': note, 'team': team})
 
 
+@login_required()
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category_list.html', {'categories': categories})
@@ -164,6 +165,7 @@ def category_delete(request, pk):
     return redirect('categories')
 
 
+@login_required()
 def todo_lists(request):
     user = request.user
     todo_lists = TodoList.objects.filter(user=user, team__isnull=True)
