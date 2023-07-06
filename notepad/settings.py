@@ -103,8 +103,6 @@ else:
         }
     }
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -145,7 +143,7 @@ STATICFILES_DIRS = [
 ]
 
 # This setting tells Django at which URL static files are going to be served to the user.
-# Here, they well be accessible at your-domain.onrender.com/static/...
+# Here, they will be accessible at your-domain.onrender.com/static/...
 STATIC_URL = '/static/'
 
 # Following settings only make sense on production and may break development environments.

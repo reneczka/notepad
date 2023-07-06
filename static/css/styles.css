@@ -15,8 +15,16 @@ body {
     padding-bottom: 56px;
 }
 
+main {
+    margin-top: 16px ;
+}
+
 ul {
     padding-left: 20px;
+}
+
+a {
+    color: black;
 }
 
 /* Header */
@@ -49,7 +57,7 @@ ul {
 
 /* Content */
 .container {
-    min-height: calc(100% - 56px - 20px - 60px);  /* for sticky footer, subtract navbar and footer heights and margins */
+    min-height: calc(100% - 56px - 20px - 60px);
 }
 
 /* Hamburger icon color */
@@ -98,7 +106,7 @@ ul {
 }
 
 
-.btn:hover {
+.button:hover {
     background: #3250d9;
 }
 
@@ -127,15 +135,12 @@ ul {
     font-size: 75%
 }
 
-a {
-    color: black;
-}
 
 h1, h2 {
     color: #2364a4;
 }
 
-.btn {
+.button {
     display: block;
     padding: 10px;
     font-size: 16px;
@@ -146,13 +151,27 @@ h1, h2 {
     cursor: pointer;
 }
 
-.btn:hover {
+.button:hover {
     color: white;
 }
 
-.form-container .btn {
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.form-container .button {
     margin-left: auto;
     margin-right: auto;
+}
+
+.delete-button {
+    margin-left: 15px;
+}
+
+.link {
+    color: blue;
+    text-decoration:underline;
 }
 
 /*Reset and default styles:

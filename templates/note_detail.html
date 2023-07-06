@@ -37,6 +37,6 @@
     <p class="text-small">Created by: {{ note.user }}</p>
     <br>
     <br>
-    <a href="{% url 'note_update' note.pk %}">Edit</a>
-    <a href="{% url 'note_delete' note.pk %}">Delete</a>
+    <a href="{% url 'note_update' note.pk %}" class="link">Edit</a>
+    <a href="{% url 'note_delete' note.pk %}" class="link">Delete</a>
 {% endblock %}

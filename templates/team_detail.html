@@ -4,7 +4,7 @@
 <body>
     <h2>{{ team.name }}</h2>
     {% if user not in team.members.all %}
-        <p>Click <a href="{% url 'team_join' team.pk %}">HERE</a> to join this team!</p>
+        <p>Click <a href="{% url 'team_join' team.pk %}" class="link">HERE</a> to join this team!</p>
     {% else %}
         <p>Owner: {{ team.owner }}</p>
         <br>
@@ -31,11 +31,11 @@
 
         <br>
         {% if user == team.owner %}
-            <a href="{% url 'team_delete' team.pk %}">Delete Team</a>
+            <a href="{% url 'team_delete' team.pk %}" class="link">Delete Team</a>
         {% endif %}
 
         {% if user in team.members.all %}
-            <a href="{% url 'team_leave' team.pk %}">Leave Team</a>
+            <a href="{% url 'team_leave' team.pk %}" class="link">Leave Team</a>
         {% endif %}
     {% endif %}
     </body>

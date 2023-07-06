@@ -4,27 +4,25 @@
     <h2>{{ todo_list.title }}</h2>
     <br>
     <h5>Todo Items:</h5>
-    <br>
     <form method="POST">
         {% csrf_token %}
         <ul>
             {% for todo_item in todo_items %}
                 <li>
-                    {{ todo_item.title }}
                     <label>
-                        <input type="checkbox" name="todo_item_{{ todo_item.id }}"
+                        <input type="checkbox" class="todo-checkbox" name="todo_item_{{ todo_item.id }}"
                                {% if todo_item.completed %}checked{% endif %}>
                     </label>
-
-                    <a href="{% url 'update_todo_item' todo_item.id %}">Update</a>
-                    <a href="{% url 'delete_todo_item' todo_item.id %}">Delete</a>
+                    {{ todo_item.title }}
+                    <a href="{% url 'delete_todo_item' todo_item.id %}" class="delete-button link">Delete</a>
                 </li>
             {% empty %}
                 <li>No todo items found.</li>
             {% endfor %}
         </ul>
-
-        <button type="submit" class="save-button">Save Changes</button>
+        <div class="button-container">
+            <a href="{% url 'create_todo_item' todo_list.id %}" class="button">Create a new item</a>
+        </div>
     </form>
     <br>
     {% if todo_list.team %}
@@ -32,9 +30,30 @@
     {% else %}
         <p class="text-bold">This is a personal note.</p>
     {% endif %}
+    <p class="text-small">Created at: {{ todo_list.created_at }}</p>
+    <p class="text-small">Updated at: {{ todo_list.modified_at }}</p>
     <p class="text-small">Created by: {{ todo_list.user }}</p>
     <br>
-    <a href="{% url 'create_todo_item' todo_list.id %}">Create Todo Item</a>
-    <a href="{% url 'update_todo_list' todo_list.id %}">Update Todo List</a>
-    <a href="{% url 'delete_todo_list' todo_list.id %}">Delete Todo List</a>
+    <a href="{% url 'update_todo_list' todo_list.id %}" class="link">Edit</a>
+    <a href="{% url 'delete_todo_list' todo_list.id %}" class="link">Delete</a>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.todo-checkbox');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', function () {
+                const todoItemId = this.name.split('_').pop();
+
+                fetch('{% url 'update_todo_item_completed' %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: `id=${todoItemId}&completed=${this.checked}`
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

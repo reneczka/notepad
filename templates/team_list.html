@@ -24,7 +24,6 @@
                     <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
                 </li>
             {% endfor %}
-            <a href="{% url 'team_create' %}"><button class="btn">create a team</button></a>
         </ul>
     {% else %}
         <p>You are not the owner of any teams yet.</p>
@@ -44,4 +43,8 @@
     {% else %}
         <p>You are not a member of any teams yet.</p>
     {% endif %}
+    <a href="{% url 'team_create' %}">
+        <button class="button">create a team</button>
+    </a>
+
 {% endblock %}

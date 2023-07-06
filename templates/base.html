@@ -47,14 +47,106 @@
     </nav>
 </header>
 <main>
-    <div class="container py-4">
+    <div class="container">
         {% block content %}
             <h2>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h2>
+            <br>
+            <h2>ReadMe</h2>
+            <p>NotePad is a simple and easy-to-use online note-taking and task management application that allows you to
+                keep
+                track of your thoughts, ideas, tasks, and team collaborations all in one place. It was built with Python
+                3.11
+                using the Django 4.2.2 framework, HTML 5 and CSS 3. The
+                application utilizes a PostgreSQL database system for efficient data storage and retrieval.</p>
+
+            <h3>Features</h3>
+            <ol>
+                <li>
+                    <h4>User Management</h4>
+                    <p>The app is built with Django and integrates with Django's built-in User model for authentication
+                        and user
+                        management.</p>
+                </li>
+                <li>
+                    <h4>Teams</h4>
+                    <p>Users can create Teams, which can be managed by a single owner. The owner can add members
+                        to
+                        the team via the TeamMember model. This allows for collaborative note-taking and task management
+                        among
+                        team
+                        members.</p>
+                </li>
+                <li>
+                    <h4>Notes</h4>
+                    <p>Users can create Notes that have a title and content. Notes are associated with a user and
+                        optionally a
+                        team
+                        and a category. This means that notes can be shared with all the members of a team, and they can
+                        be
+                        organized into different categories for better organization.</p>
+                </li>
+                <li>
+                    <h4>Categories</h4>
+                    <p>Notes can be categorized using the Category model. Each category has a title and a
+                        description.</p>
+                </li>
+                <li>
+                    <h4>Todo Lists and Todo Items</h4>
+                    <p>Users can create Todo Lists, each of which can contain multiple Todo Items. Todo Lists are
+                        associated with a user and optionally a team. This allows users to manage their tasks and also
+                        share
+                        task
+                        lists with their teams. Todo Items have a title and a status indicating whether the task has
+                        been
+                        completed.</p>
+                </li>
+                <li>
+                    <h4>Timestamps</h4>
+                    <p>All major models (Notes, Todo Lists) include timestamps for creation and last modification,
+                        allowing
+                        users to
+                        keep track of when a note was written or a task was last updated.</p>
+                </li>
+            </ol>
+
+            <h3>Usage</h3>
+            <p>You will need to sign up and log in to create notes, todo lists, and teams. This app allows for
+                collaborative work, enabling team members to share, edit, and manage notes and todo lists together for
+                efficient
+                team coordination.</p>
+
+            <h3>Models</h3>
+            <p>Here is a brief description of the models used in the app:</p>
+            <ul>
+                <li><strong>User:</strong> Django's built-in user model. It's used for authentication and as a foreign
+                    key in
+                    other
+                    models.
+                </li>
+                <li><strong>Team:</strong> Represents a team of users. Has a name, description, an owner, and multiple
+                    members.
+                </li>
+                <li><strong>TeamMember:</strong> Represents a user's membership in a team.</li>
+                <li><strong>Category:</strong> Represents a category that can be associated with a note.</li>
+                <li><strong>Note:</strong> Represents a note. Has content, associated user, optional category, optional
+                    team, and timestamps.
+                </li>
+                <li><strong>TodoList:</strong> Represents a list of tasks. Has associated user, optional team, and
+                    timestamps.
+                </li>
+                <li><strong>TodoItem:</strong> Represents a task in a todo list. Has a title and a completion status.
+                </li>
+            </ul>
+            <p>Please refer to the <a href="https://github.com/reneczka/notepad" class="link">code</a> for more
+                details about these models
+                and
+                how they are used in the app.</p>
         {% endblock %}
+
     </div>
 </main>
 <footer class="footer text-center py-3">
-    reneczka
+    <a href="https://github.com/reneczka/notepad">reneczka</a>
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>

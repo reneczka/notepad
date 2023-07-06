@@ -1,7 +1,10 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Category, Note, TodoList, TodoItem, Team, TeamMember
 from .forms import NoteForm, CategoryForm, TodoListForm, TodoItemForm, TeamForm
 from guardian.shortcuts import assign_perm
@@ -345,3 +348,17 @@ def team_delete(request, pk):
     return redirect('team_list')
 
 
+def readme(request):
+    return render(request, 'readme.html')
+
+@csrf_exempt
+def update_todo_item_completed(request):
+    if request.method == 'POST':
+        todo_item_id = request.POST.get('id')
+        completed = request.POST.get('completed') == 'true'
+
+        todo_item = TodoItem.objects.get(id=todo_item_id)
+        todo_item.completed = completed
+        todo_item.save()
+
+        return JsonResponse({'success': True})

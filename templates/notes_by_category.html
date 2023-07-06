@@ -10,6 +10,6 @@
     {% endfor %}
 </ul>
     <br>
-    <a href="{% url 'category_update' category.pk %}">Edit</a>
-    <a href="{% url 'category_delete' category.pk %}">Delete</a>
+    <a href="{% url 'category_update' category.pk %}" class="link">Edit</a>
+    <a href="{% url 'category_delete' category.pk %}" class="link">Delete</a>
 {% endblock %}
