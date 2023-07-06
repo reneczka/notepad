@@ -113,7 +113,7 @@ def note_delete(request, pk):
 def notes_by_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     notes = Note.objects.filter(category=category)
-    return render(request, 'notes_by_category.html', {'category': category, 'notes': notes})
+    return render(request, 'category_detail.html', {'category': category, 'notes': notes})
 
 
 @login_required

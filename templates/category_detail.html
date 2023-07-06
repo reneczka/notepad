@@ -3,7 +3,7 @@
     <h1>{{ category.name }}</h1>
     <h4>{{ category.description }}</h4>
     <br>
-    <h3>Notatki:</h3>
+    <h3>Notes:</h3>
     <ul>
         {% for note in notes %}
             <li><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></li>
