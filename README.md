@@ -1,6 +1,12 @@
 # ReadMe
 
-NotePad is a simple and easy-to-use online note-taking and task management application that allows you to keep track of your thoughts, ideas, tasks, and team collaborations all in one place. It was built with Python 3.11 using the Django 4.2.2 framework, HTML 5 and CSS 3. The application utilizes a PostgreSQL database system for efficient data storage and retrieval.
+NotePad is a simple and easy-to-use online note-taking and task management application that allows you to keep track of your thoughts, ideas, tasks, and team collaborations all in one place. It was built with:
+
+- Python 3.11
+- Django 4.2.2
+- HTML 5
+- CSS 3
+- PostgreSQL (for efficient data storage and retrieval)
 
 ### Features
 
