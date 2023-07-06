@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -128,17 +129,17 @@ def note_detail(request, pk):
     return render(request, 'note_detail.html', {'note': note, 'team': team})
 
 
-@login_required()
+@login_required
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category_list.html', {'categories': categories})
 
-
+@login_required
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
     return render(request, 'category_detail.html', {'category': category})
 
-
+@login_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -149,7 +150,7 @@ def category_create(request):
         form = CategoryForm()
     return render(request, 'category_create.html', {'form': form})
 
-
+@login_required
 def category_update(request, pk):
     category = Category.objects.get(id=pk)
     if request.method == 'POST':
@@ -161,14 +162,14 @@ def category_update(request, pk):
         form = CategoryForm(instance=category)
     return render(request, 'category_create.html', {'form': form})
 
-
+@login_required
 def category_delete(request, pk):
     category = Category.objects.get(id=pk)
     category.delete()
     return redirect('categories')
 
 
-@login_required()
+@login_required
 def todo_lists(request):
     user = request.user
     todo_lists = TodoList.objects.filter(user=user, team__isnull=True)
@@ -205,6 +206,7 @@ def create_todo_list(request):
     return render(request, 'create_todo_list.html', {'form': form})
 
 
+
 @login_required
 def update_todo_list(request, pk):
     todo_list = get_object_or_404(TodoList, id=pk)
@@ -212,6 +214,8 @@ def update_todo_list(request, pk):
         form = TodoListForm(request.POST, instance=todo_list)
         if form.is_valid():
             form.save()
+            todo_list.modified_at = timezone.now()
+            todo_list.save()
             return redirect('todo_lists')
     else:
         form = TodoListForm(instance=todo_list)
@@ -227,7 +231,7 @@ def delete_todo_list(request, pk):
     return render(request, 'delete_todo_list.html', {'todo_list': todo_list})
 
 
-@login_required()
+@login_required
 def todo_list_detail(request, pk):
     todo_list = get_object_or_404(TodoList, pk=pk)
     todo_items = TodoItem.objects.filter(todo_list=todo_list)
@@ -242,11 +246,14 @@ def todo_list_detail(request, pk):
                 todo_item.completed = False
             todo_item.save()
 
+        todo_list.modified_at = timezone.now()  # Update modified_at
+        todo_list.save()
+
         return redirect('todo_list_detail', pk=todo_list.id)
 
     return render(request, 'todo_list_detail.html', {'todo_list': todo_list, 'todo_items': todo_items})
 
-
+@login_required
 def create_todo_item(request, pk):
     todo_list = get_object_or_404(TodoList, id=pk)
     if request.method == 'POST':
@@ -255,12 +262,15 @@ def create_todo_item(request, pk):
             todo_item = form.save(commit=False)
             todo_item.todo_list = todo_list
             todo_item.save()
+            todo_list.modified_at = timezone.now()
+            todo_list.save()
             return redirect('todo_list_detail', pk=todo_list.id)
     else:
         form = TodoItemForm()
     return render(request, 'create_todo_item.html', {'form': form, 'todo_list': todo_list})
 
 
+@login_required
 def update_todo_item(request, pk):
     todo_item = get_object_or_404(TodoItem, id=pk)
     todo_list = todo_item.todo_list
@@ -270,19 +280,32 @@ def update_todo_item(request, pk):
             todo_item = form.save(commit=False)
             todo_item.completed = request.POST.get('completed') == 'on'
             todo_item.save()
+            todo_list.modified_at = timezone.now()
+            todo_list.save()
             return redirect('todo_list_detail', pk=todo_list.id)
     else:
         form = TodoItemForm(instance=todo_item)
     return render(request, 'update_todo_item.html', {'form': form, 'todo_item': todo_item})
 
 
+# @login_required
+# def delete_todo_item(request, pk):
+#     todo_item = get_object_or_404(TodoItem, id=pk)
+#     todo_list = todo_item.todo_list
+#     if request.method == 'POST':
+#         todo_item.delete()
+#         return redirect('todo_list_detail', pk=todo_list.id)
+#     return render(request, 'delete_todo_item.html', {'todo_item': todo_item, 'todo_list': todo_list})
+@login_required()
 def delete_todo_item(request, pk):
     todo_item = get_object_or_404(TodoItem, id=pk)
     todo_list = todo_item.todo_list
     if request.method == 'POST':
         todo_item.delete()
+        todo_list.modified_at = timezone.now()
+        todo_list.save()
         return redirect('todo_list_detail', pk=todo_list.id)
-    return render(request, 'delete_todo_item.html', {'todo_item': todo_item, 'todo_list': todo_list})
+    return render(request, 'delete_todo_item.html', {'todo_item': todo_item})
 
 
 def share_note_with_team(note, team):
@@ -347,9 +370,6 @@ def team_delete(request, pk):
         team.delete()
     return redirect('team_list')
 
-
-def readme(request):
-    return render(request, 'readme.html')
 
 @csrf_exempt
 def update_todo_item_completed(request):

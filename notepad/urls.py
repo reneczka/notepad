@@ -50,6 +50,5 @@ urlpatterns = [
     path('team/<int:pk>/join/', views.team_join, name='team_join'),
     path('team/<int:pk>/leave/', views.team_leave, name='team_leave'),
     path('team/<int:pk>/delete/', views.team_delete, name='team_delete'),
-    path('readme/' , views.readme, name='readme'),
-path('update_todo_item_completed/', views.update_todo_item_completed, name='update_todo_item_completed'),
+    path('update_todo_item_completed/', views.update_todo_item_completed, name='update_todo_item_completed'),
 ]

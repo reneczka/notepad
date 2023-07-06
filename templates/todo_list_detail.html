@@ -28,7 +28,7 @@
     {% if todo_list.team %}
         <p>Team: <a href="{% url 'team_detail' todo_list.team.pk %}">{{ todo_list.team.name }}</a></p>
     {% else %}
-        <p class="text-bold">This is a personal note.</p>
+        <p class="text-bold">This is a personal list.</p>
     {% endif %}
     <p class="text-small">Created at: {{ todo_list.created_at }}</p>
     <p class="text-small">Updated at: {{ todo_list.modified_at }}</p>
