@@ -84,24 +84,25 @@ WSGI_APPLICATION = 'notepad.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-if 'RENDER' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.config(
-            # Feel free to alter this value to suit your needs.
-            default='postgresql://postgres:postgres@localhost:5432/notepad_6kpe',
-            conn_max_age=600
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('LOCAL_DB_NAME'),
-            'HOST': 'localhost',
-            'USER': os.environ.get('LOCAL_DB_USER'),
-            'PASSWORD': os.environ.get('LOCAL_DB_PASSWORD'),
-        }
-    }
+# if 'RENDER' in os.environ:
+DATABASES = {
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        # default='postgresql://postgres:postgres@localhost:5432/notepad_6kpe',
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
+}
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': os.environ.get('LOCAL_DB_NAME'),
+#             'HOST': 'localhost',
+#             'USER': os.environ.get('LOCAL_DB_USER'),
+#             'PASSWORD': os.environ.get('LOCAL_DB_PASSWORD'),
+#         }
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
