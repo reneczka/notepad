@@ -44,7 +44,7 @@ NOTEPAD/
 │   └── styles.css - Custom CSS styles
 ├── templates/
 ├── .env — Stores environment variables
-├── pyproject.toml - Project configuration and dependencies
+├── requirements.txt - Project configuration and dependencies
 └── README.md — Project documentation
 ```
 
@@ -76,27 +76,36 @@ To set up and run the Notepad project, follow these steps:
 
     Create a .env file in the project root directory to store sensitive data like database credentials. Follow the format of the .env.example file included in the repository.
 
-5. **Apply database migrations::**
+5. **Create the DB:**
+
+    Set up the PostgreSQL database.
+    In psql terminal:
+    ```
+    CREATE DATABASE notepad;
+    \c notepad
+    ```
+
+6. **Apply database migrations::**
 
    ```
     python manage.py makemigrations
     python manage.py migrate
    ```
-6. **Create a superuser:**
+7. **Create a superuser:**
 
    ```
     python manage.py createsuperuser
    ```
 
-7. **Run the development server:**
+8. **Run the development server:**
 
    ```
     python manage.py runserver
    ```
 
-8. **Access the application:**
+9. **Access the application:**
 
-    Open your browser and navigate to http://127.0.0.1:8000 to start using the application. Log in using the superuser credentials to access the admin panel at http://127.0.0.1:8000/admin.
+    Open your browser and navigate to http://127.0.0.1:8000 to start using the application. You can log in using the superuser credentials to access the admin panel at http://127.0.0.1:8000/admin.
 
 
 ## Usage
